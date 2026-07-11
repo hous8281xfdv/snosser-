@@ -18,7 +18,6 @@ function initCards() {
             <button class="diff-btn good" data-diff="2">Легко</button>
         </div>
         <button id="quitCards" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;font-family:inherit;cursor:pointer;margin-top:12px;color:var(--text);">Завершить</button>
-        <p id="cardsLoading" style="text-align:center;color:var(--text-secondary);padding:20px;display:none;">Загрузка перевода...</p>
     `;
 
     let cardsWords = [...allWords].filter(w => w.length >= 3 && w.length <= 15);
@@ -36,7 +35,6 @@ function initCards() {
     const hint = document.getElementById('flipHint');
     const diffs = document.getElementById('diffButtons');
     const fill = document.getElementById('cardsProgressFill');
-    const loading = document.getElementById('cardsLoading');
 
     function showCard() {
         if (cardIndex >= cardsWords.length) {
@@ -51,50 +49,37 @@ function initCards() {
         back.style.display = 'none';
         hint.style.display = 'block';
         diffs.style.display = 'none';
-        loading.style.display = 'none';
-        
         const word = cardsWords[cardIndex];
         front.innerHTML = `<span>${word}</span>`;
-        back.innerHTML = `<span style="color:var(--text-secondary);">Загрузка...</span>`;
-        
+        back.innerHTML = `<span>${word}</span>`;
         fill.style.width = ((cardIndex / cardsWords.length) * 100) + '%';
+        
+        fetchWordTranslation(word).then(data => {
+            if (data && data.t.length > 0) {
+                currentTranslation = data.t[0];
+            } else {
+                currentTranslation = word;
+            }
+        });
     }
 
-    flashcard.addEventListener('click', async () => {
+    flashcard.addEventListener('click', () => {
         if (flipped) return;
         flipped = true;
         flashcard.classList.add('flipped');
         front.style.display = 'none';
         back.style.display = 'flex';
         hint.style.display = 'none';
-        loading.style.display = 'block';
-        diffs.style.display = 'none';
-        
-        const word = cardsWords[cardIndex];
-        
-        if (!currentTranslation) {
-            const data = await fetchFromYandex(word);
-            if (data && data.t.length > 0) {
-                currentTranslation = data.t[0];
-            } else {
-                currentTranslation = word;
-            }
-        }
-        
-        back.innerHTML = `<span>${currentTranslation}</span>`;
-        loading.style.display = 'none';
+        back.innerHTML = `<span>${currentTranslation || cardsWords[cardIndex]}</span>`;
         diffs.style.display = 'flex';
     });
 
     document.getElementById('diffButtons').addEventListener('click', (e) => {
         if (!e.target.classList.contains('diff-btn')) return;
         const diff = parseInt(e.target.dataset.diff);
-        
         let points = 0;
         if (diff === 2) points = 2;
         else if (diff === 1) points = 1;
-        else points = 0;
-        
         if (points > 0) addScore(points);
         userData.cardsCompleted++;
         saveUserData();
