@@ -4,26 +4,31 @@ function initCards() {
     
     container.innerHTML = `
         <h2 style="font-size:20px;font-weight:600;margin-bottom:16px;">Карточки для запоминания</h2>
-        <div id="cardsProgress" class="progress-bar"><div class="progress-fill" id="cardsProgressFill" style="width:0%"></div></div>
-        <div class="flashcard" id="flashcardEl">
-            <div id="flashcardFront" style="font-size:28px;"></div>
-            <div id="flashcardBack" style="display:none;font-size:28px;"></div>
-            <p style="color:#c4c0b8;font-size:12px;margin-top:12px;" id="flipHint">Нажмите чтобы перевернуть</p>
+        <div class="progress-bar"><div class="progress-fill" id="cardsProgressFill" style="width:0%"></div></div>
+        <div class="flashcard-container">
+            <div class="flashcard" id="flashcardEl">
+                <div class="flashcard-front" id="flashcardFront"></div>
+                <div class="flashcard-back" id="flashcardBack"></div>
+            </div>
+            <p class="flip-hint" id="flipHint" style="text-align:center;color:var(--text-placeholder);font-size:12px;margin-top:12px;">Нажмите чтобы перевернуть</p>
         </div>
         <div class="diff-buttons" id="diffButtons" style="display:none;">
             <button class="diff-btn again" data-diff="0">Сложно</button>
             <button class="diff-btn hard" data-diff="1">Нормально</button>
             <button class="diff-btn good" data-diff="2">Легко</button>
         </div>
-        <button id="quitCards" style="width:100%;padding:10px;background:none;border:1px solid #e8e5e1;border-radius:10px;font-family:inherit;cursor:pointer;margin-top:12px;">Завершить</button>
+        <button id="quitCards" style="width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:10px;font-family:inherit;cursor:pointer;margin-top:12px;color:var(--text);">Завершить</button>
+        <p id="cardsLoading" style="text-align:center;color:var(--text-secondary);padding:20px;display:none;">Загрузка перевода...</p>
     `;
 
-    let cardsWords = [...allWords];
+    let cardsWords = [...allWords].filter(w => w.length >= 3 && w.length <= 15);
     let cardIndex = 0;
     let flipped = false;
+    let currentTranslation = '';
 
     function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
     shuffle(cardsWords);
+    cardsWords = cardsWords.slice(0, 50);
 
     const flashcard = document.getElementById('flashcardEl');
     const front = document.getElementById('flashcardFront');
@@ -31,40 +36,66 @@ function initCards() {
     const hint = document.getElementById('flipHint');
     const diffs = document.getElementById('diffButtons');
     const fill = document.getElementById('cardsProgressFill');
+    const loading = document.getElementById('cardsLoading');
 
     function showCard() {
-        if (cardIndex >= cardsWords.length) cardIndex = 0;
+        if (cardIndex >= cardsWords.length) {
+            container.innerHTML = `<div style="text-align:center;padding:40px;"><h2 style="color:var(--text);">Отлично!</h2><p style="color:var(--text-secondary);">Вы прошли все карточки</p><button id="cardsRestart" class="next-btn" style="margin-top:16px;">Начать заново</button></div>`;
+            document.getElementById('cardsRestart').addEventListener('click', initCards);
+            return;
+        }
         flipped = false;
+        currentTranslation = '';
         flashcard.classList.remove('flipped');
-        front.style.display = 'block';
+        front.style.display = 'flex';
         back.style.display = 'none';
         hint.style.display = 'block';
         diffs.style.display = 'none';
+        loading.style.display = 'none';
+        
         const word = cardsWords[cardIndex];
-        front.textContent = word;
-        const data = fullDictionary[word];
-        back.textContent = data ? data.t[0] : word;
+        front.innerHTML = `<span>${word}</span>`;
+        back.innerHTML = `<span style="color:var(--text-secondary);">Загрузка...</span>`;
+        
         fill.style.width = ((cardIndex / cardsWords.length) * 100) + '%';
     }
 
-    flashcard.addEventListener('click', () => {
+    flashcard.addEventListener('click', async () => {
         if (flipped) return;
         flipped = true;
         flashcard.classList.add('flipped');
         front.style.display = 'none';
-        back.style.display = 'block';
+        back.style.display = 'flex';
         hint.style.display = 'none';
+        loading.style.display = 'block';
+        diffs.style.display = 'none';
+        
+        const word = cardsWords[cardIndex];
+        
+        if (!currentTranslation) {
+            const data = await fetchFromYandex(word);
+            if (data && data.t.length > 0) {
+                currentTranslation = data.t[0];
+            } else {
+                currentTranslation = word;
+            }
+        }
+        
+        back.innerHTML = `<span>${currentTranslation}</span>`;
+        loading.style.display = 'none';
         diffs.style.display = 'flex';
     });
 
     document.getElementById('diffButtons').addEventListener('click', (e) => {
         if (!e.target.classList.contains('diff-btn')) return;
         const diff = parseInt(e.target.dataset.diff);
-        if (diff === 2) {
-            userData.score = Math.min(100, userData.score + 2);
-        } else if (diff === 1) {
-            userData.score = Math.min(100, userData.score + 1);
-        }
+        
+        let points = 0;
+        if (diff === 2) points = 2;
+        else if (diff === 1) points = 1;
+        else points = 0;
+        
+        if (points > 0) addScore(points);
         userData.cardsCompleted++;
         saveUserData();
         updateLevelDisplay();
@@ -73,7 +104,7 @@ function initCards() {
     });
 
     document.getElementById('quitCards').addEventListener('click', () => {
-        container.innerHTML = '<p style="text-align:center;color:#8c8c8c;">Сессия завершена</p>';
+        container.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:40px;">Сессия завершена. Возвращайтесь!</p>';
     });
 
     showCard();
