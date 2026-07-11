@@ -7,275 +7,178 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="M21 21l-4.35-4.35"/>
-                    <path d="M11 8a3 3 0 0 0-3 3v3"/>
-                    <path d="M8 11h6"/>
-                </svg>
-                <span>Lingua</span>
-            </div>
-            <nav class="nav">
-                <button class="nav-btn active" data-tab="translator">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 8l6 6M19 8l-6 6M12 4v16"/>
+    <div class="app-container">
+        <div id="authScreen" class="auth-screen">
+            <div class="auth-card">
+                <div class="auth-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8a3 3 0 0 0-3 3v3"/><path d="M8 11h6"/>
                     </svg>
-                    Перевод
-                </button>
-                <button class="nav-btn" data-tab="dictionary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                    </svg>
-                    Словарь
-                </button>
-                <button class="nav-btn" data-tab="cards">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/>
-                        <line x1="12" y1="17" x2="12" y2="21"/>
-                    </svg>
-                    Карточки
-                </button>
-                <button class="nav-btn" data-tab="grammar">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="4 7 12 3 20 7"/>
-                        <polyline points="4 12 12 8 20 12"/>
-                        <polyline points="4 17 12 13 20 17"/>
-                    </svg>
-                    Грамматика
-                </button>
-            </nav>
-        </header>
-
-        <main class="main">
-            <section id="translatorSection" class="section active">
-                <div class="translator-card">
-                    <div class="input-section">
-                        <div class="language-selector">
-                            <span class="lang active" id="sourceLangLabel">Английский</span>
-                        </div>
-                        <textarea id="sourceText" class="text-input" placeholder="Введите текст для перевода..." rows="5"></textarea>
-                        <div class="input-footer">
-                            <span class="char-count"><span id="charCount">0</span> / 5000</span>
-                            <div class="input-actions">
-                                <button id="voiceInputBtn" class="icon-btn" title="Голосовой ввод">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                        <line x1="12" y1="19" x2="12" y2="23"/>
-                                        <line x1="8" y1="23" x2="16" y2="23"/>
-                                    </svg>
-                                </button>
-                                <button id="clearBtn" class="icon-btn" title="Очистить">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="18" y1="6" x2="6" y2="18"/>
-                                        <line x1="6" y1="6" x2="18" y2="18"/>
-                                    </svg>
-                                </button>
-                                <button id="copySourceBtn" class="icon-btn" title="Копировать">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                    <span>Lingua</span>
+                </div>
+                <div id="authForms">
+                    <div id="loginForm" class="auth-form">
+                        <h2>Вход</h2>
+                        <input type="text" id="loginUsername" placeholder="Имя пользователя" class="auth-input">
+                        <input type="password" id="loginPassword" placeholder="Пароль" class="auth-input">
+                        <button id="loginBtn" class="auth-btn">Войти</button>
+                        <p class="auth-switch">Нет аккаунта? <span id="showRegister">Зарегистрироваться</span></p>
+                        <p id="loginError" class="auth-error"></p>
                     </div>
-                    <div class="divider">
-                        <button id="swapBtn" class="swap-btn" title="Поменять языки">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="17 1 21 5 17 9"/>
-                                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-                                <polyline points="7 23 3 19 7 15"/>
-                                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="output-section">
-                        <div class="language-selector">
-                            <span class="lang active" id="targetLangLabel">Русский</span>
-                        </div>
-                        <div id="outputText" class="text-output">
-                            <span class="placeholder-text">Перевод появится здесь...</span>
-                        </div>
-                        <div class="output-footer">
-                            <span class="translation-info" id="translationInfo"></span>
-                            <div class="output-actions">
-                                <button id="speakBtn" class="icon-btn" title="Озвучить">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                                    </svg>
-                                </button>
-                                <button id="copyOutputBtn" class="icon-btn" title="Копировать">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                    <div id="registerForm" class="auth-form" style="display:none;">
+                        <h2>Регистрация</h2>
+                        <input type="text" id="regUsername" placeholder="Имя пользователя" class="auth-input">
+                        <input type="password" id="regPassword" placeholder="Пароль" class="auth-input">
+                        <input type="password" id="regPasswordConfirm" placeholder="Подтвердите пароль" class="auth-input">
+                        <button id="registerBtn" class="auth-btn">Зарегистрироваться</button>
+                        <p class="auth-switch">Уже есть аккаунт? <span id="showLogin">Войти</span></p>
+                        <p id="registerError" class="auth-error"></p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <section id="dictionarySection" class="section">
-                <div class="dictionary-card">
-                    <div class="dictionary-search">
+        <div id="goalScreen" class="goal-screen" style="display:none;">
+            <div class="goal-card">
+                <h2>Выберите цель обучения</h2>
+                <div class="goal-grid">
+                    <button class="goal-btn" data-goal="speak">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                        </svg>
+                        <span>Научиться говорить</span>
+                    </button>
+                    <button class="goal-btn" data-goal="read">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        <span>Научиться читать</span>
+                    </button>
+                    <button class="goal-btn" data-goal="write">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                        </svg>
+                        <span>Научиться писать</span>
+                    </button>
+                    <button class="goal-btn" data-goal="travel">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"/>
+                        </svg>
+                        <span>Для путешествий</span>
+                    </button>
+                    <button class="goal-btn" data-goal="work">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <span>Для работы</span>
+                    </button>
+                    <button class="goal-btn" data-goal="exam">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/>
+                        </svg>
+                        <span>Для экзаменов</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mainApp" class="main-app" style="display:none;">
+            <header class="header">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8a3 3 0 0 0-3 3v3"/><path d="M8 11h6"/></svg>
+                    <span>Lingua</span>
+                </div>
+                <nav class="nav" id="mainNav">
+                    <button class="nav-btn active" data-tab="dictionary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        Словарь
+                    </button>
+                    <button class="nav-btn" data-tab="cards">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        Карточки
+                    </button>
+                    <button class="nav-btn" data-tab="grammar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="4 7 12 3 20 7"/><polyline points="4 12 12 8 20 12"/><polyline points="4 17 12 13 20 17"/></svg>
+                        Грамматика
+                    </button>
+                    <button class="nav-btn" data-tab="quiz">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Тест
+                    </button>
+                </nav>
+                <button class="profile-btn" id="profileBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span id="profileName"></span>
+                    <span class="level-badge" id="levelBadge">A1</span>
+                </button>
+            </header>
+
+            <main class="main">
+                <section id="dictionarySection" class="section active">
+                    <div class="card">
                         <div class="search-wrapper">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"/>
-                                <path d="M21 21l-4.35-4.35"/>
-                            </svg>
-                            <input type="text" id="dictionarySearch" class="search-input" placeholder="Поиск слова на английском...">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8c8c8c" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" id="dictionarySearch" class="search-input" placeholder="Поиск слова...">
                         </div>
                         <div class="search-suggestions" id="searchSuggestions"></div>
+                        <div id="dictionaryResult"></div>
                     </div>
-                    <div class="dictionary-result" id="dictionaryResult">
-                        <div class="dict-placeholder">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d0ccc4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                            </svg>
-                            <p>Введите слово для поиска</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                </section>
+                <section id="cardsSection" class="section">
+                    <div class="card" id="cardsContent"></div>
+                </section>
+                <section id="grammarSection" class="section">
+                    <div class="card" id="grammarContent"></div>
+                </section>
+                <section id="quizSection" class="section">
+                    <div class="card" id="quizContent"></div>
+                </section>
+            </main>
+        </div>
 
-            <section id="cardsSection" class="section">
-                <div class="cards-card">
-                    <div id="cardsStart" class="cards-start">
-                        <div class="cards-icon">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                <line x1="8" y1="21" x2="16" y2="21"/>
-                                <line x1="12" y1="17" x2="12" y2="21"/>
-                            </svg>
-                        </div>
-                        <h2 class="cards-title">Карточки для запоминания</h2>
-                        <p class="cards-subtitle">Интервальное повторение слов</p>
-                        <div class="cards-selector">
-                            <button class="cards-option" data-mode="enru">
-                                <span class="cards-option-label">Английский — Русский</span>
-                                <span class="cards-option-desc">Видите английское слово, вспоминаете перевод</span>
-                            </button>
-                            <button class="cards-option" data-mode="ruen">
-                                <span class="cards-option-label">Русский — Английский</span>
-                                <span class="cards-option-desc">Видите русское слово, вспоминаете перевод</span>
-                            </button>
-                        </div>
-                        <p class="cards-count" id="cardsCount">Доступно слов: 500</p>
+        <div id="profileScreen" class="profile-screen" style="display:none;">
+            <div class="profile-card">
+                <button id="closeProfile" class="close-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
-                    <div id="cardsActive" class="cards-active" style="display:none;">
-                        <div class="card-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="cardProgressFill"></div>
-                            </div>
-                            <span class="progress-text" id="cardProgressText">0 / 0</span>
+                    <h2 id="profileTitle"></h2>
+                    <p id="profileLevel"></p>
+                    <div class="profile-score">
+                        <div class="score-circle">
+                            <svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="#f0ede8" stroke-width="6"/><circle id="scoreCircle" cx="50" cy="50" r="45" fill="none" stroke="#1a1a1a" stroke-width="6" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"/></svg>
+                            <span id="scoreText">0</span>
                         </div>
-                        <div class="flashcard" id="flashcard">
-                            <div class="flashcard-front" id="flashcardFront"></div>
-                            <div class="flashcard-back" id="flashcardBack" style="display:none;"></div>
-                            <p class="flip-hint" id="flipHint">Нажмите чтобы перевернуть</p>
-                        </div>
-                        <div class="difficulty-buttons" id="difficultyButtons" style="display:none;">
-                            <button class="diff-btn again" data-diff="0">Сложно</button>
-                            <button class="diff-btn hard" data-diff="1">Нормально</button>
-                            <button class="diff-btn good" data-diff="2">Легко</button>
-                        </div>
-                        <button id="quitCardsBtn" class="quit-btn">Завершить</button>
                     </div>
                 </div>
-            </section>
-
-            <section id="grammarSection" class="section">
-                <div class="grammar-card">
-                    <div id="grammarMenu" class="grammar-menu">
-                        <h2 class="grammar-title">Грамматические упражнения</h2>
-                        <div class="grammar-grid">
-                            <button class="grammar-exercise-btn" data-exercise="articles">
-                                <span class="ge-icon">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="4 7 12 3 20 7"/>
-                                        <polyline points="4 12 12 8 20 12"/>
-                                        <polyline points="4 17 12 13 20 17"/>
-                                    </svg>
-                                </span>
-                                <span class="ge-label">Артикли a / an / the</span>
-                                <span class="ge-count">20 заданий</span>
-                            </button>
-                            <button class="grammar-exercise-btn" data-exercise="tenses">
-                                <span class="ge-icon">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                </span>
-                                <span class="ge-label">Времена глаголов</span>
-                                <span class="ge-count">20 заданий</span>
-                            </button>
-                            <button class="grammar-exercise-btn" data-exercise="prepositions">
-                                <span class="ge-icon">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="5" r="2"/>
-                                        <path d="M12 7v14"/>
-                                        <line x1="8" y1="13" x2="16" y2="13"/>
-                                    </svg>
-                                </span>
-                                <span class="ge-label">Предлоги</span>
-                                <span class="ge-count">20 заданий</span>
-                            </button>
-                            <button class="grammar-exercise-btn" data-exercise="wordorder">
-                                <span class="ge-icon">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="4" y1="6" x2="20" y2="6"/>
-                                        <line x1="4" y1="12" x2="14" y2="12"/>
-                                        <line x1="4" y1="18" x2="8" y2="18"/>
-                                    </svg>
-                                </span>
-                                <span class="ge-label">Порядок слов</span>
-                                <span class="ge-count">15 заданий</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="grammarActive" class="grammar-active" style="display:none;">
-                        <div class="grammar-header">
-                            <button id="backToGrammarBtn" class="back-btn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="19" y1="12" x2="5" y2="12"/>
-                                    <polyline points="12 19 5 12 12 5"/>
-                                </svg>
-                                Назад
-                            </button>
-                            <div class="grammar-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="grammarProgressFill"></div>
-                                </div>
-                                <span class="progress-text" id="grammarProgressText">1 / 20</span>
-                            </div>
-                        </div>
-                        <div class="grammar-question-block">
-                            <p class="grammar-question" id="grammarQuestion"></p>
-                            <div class="grammar-options" id="grammarOptions"></div>
-                        </div>
-                        <button id="grammarNextBtn" class="next-btn" disabled>Далее</button>
-                    </div>
-                    <div id="grammarResult" class="grammar-result" style="display:none;">
-                        <div class="result-icon" id="grammarResultIcon"></div>
-                        <h2 id="grammarResultTitle"></h2>
-                        <p class="result-score" id="grammarResultScore"></p>
-                        <button id="grammarRetryBtn" class="retry-btn">Пройти заново</button>
-                    </div>
+                <div class="profile-stats">
+                    <div class="stat"><span id="statWords">0</span><span>слов</span></div>
+                    <div class="stat"><span id="statCards">0</span><span>карточек</span></div>
+                    <div class="stat"><span id="statTests">0</span><span>тестов</span></div>
                 </div>
-            </section>
-        </main>
+                <div class="profile-section">
+                    <h3>Достижения</h3>
+                    <div id="achievementsList" class="achievements-list"></div>
+                </div>
+                <div class="profile-section">
+                    <h3>Ошибки</h3>
+                    <div id="mistakesList" class="mistakes-list"></div>
+                </div>
+                <button id="logoutBtn" class="logout-btn">Выйти</button>
+            </div>
+        </div>
     </div>
 
+    <script src="levels.js"></script>
+    <script src="dictionary.js"></script>
+    <script src="auth.js"></script>
+    <script src="cards.js"></script>
+    <script src="grammar.js"></script>
+    <script src="quiz.js"></script>
+    <script src="profile.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
