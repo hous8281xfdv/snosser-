@@ -94,11 +94,19 @@
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                         Тест
                     </button>
+                    <button class="nav-btn" data-tab="leaderboard">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                        Рейтинг
+                    </button>
                 </nav>
                 <button class="theme-toggle" id="themeToggle" title="Переключить тему">
                     <div class="theme-toggle-thumb">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                     </div>
+                </button>
+                <button class="notification-bell" id="notificationBell" title="Уведомления">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span id="notificationBadge">0</span>
                 </button>
                 <button class="profile-btn" id="profileBtn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -127,7 +135,16 @@
                 <section id="quizSection" class="section">
                     <div class="card" id="quizContent"></div>
                 </section>
+                <section id="leaderboardSection" class="section">
+                    <div class="card" id="leaderboardContent"></div>
+                </section>
             </main>
+            <div style="text-align:center;padding:20px;margin-top:20px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="#" onclick="showDocument('terms')" style="color:var(--text-secondary);font-size:12px;text-decoration:none;">Условия использования</a>
+                <a href="#" onclick="showDocument('privacy')" style="color:var(--text-secondary);font-size:12px;text-decoration:none;">Политика конфиденциальности</a>
+                <a href="#" onclick="showDocument('cookies')" style="color:var(--text-secondary);font-size:12px;text-decoration:none;">Cookies</a>
+                <a href="#" onclick="showDocument('offer')" style="color:var(--text-secondary);font-size:12px;text-decoration:none;">Публичная оферта</a>
+            </div>
         </div>
 
         <div id="profileScreen" class="profile-screen" style="display:none;">
@@ -169,6 +186,10 @@
     <script src="cards.js"></script>
     <script src="grammar.js"></script>
     <script src="quiz.js"></script>
+    <script src="leaderboard.js"></script>
+    <script src="notifications.js"></script>
+    <script src="admin.js"></script>
+    <script src="documents.js"></script>
     <script src="profile.js"></script>
     <script src="script.js"></script>
 </body>
