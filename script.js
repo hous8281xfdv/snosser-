@@ -17,6 +17,7 @@ function initNavigation() {
             if (this.dataset.tab === 'cards') initCards();
             if (this.dataset.tab === 'grammar') initGrammar();
             if (this.dataset.tab === 'quiz') initQuiz();
+            if (this.dataset.tab === 'leaderboard') initLeaderboard();
         });
     });
 }
@@ -86,12 +87,6 @@ function showToast(message, type = 'success') {
     toast.innerHTML = `${icons[type] || icons.success} ${message}`;
     container.appendChild(toast);
     setTimeout(() => { toast.classList.add('removing'); setTimeout(() => toast.remove(), 300); }, 3000);
-}
-
-function updateLevelDisplay() {
-    const level = levelSystem.getLevel(userData.score || 0);
-    const badge = document.getElementById('levelBadge');
-    if (badge) { badge.textContent = level.name; badge.style.background = level.color; }
 }
 
 const themeToggle = document.getElementById('themeToggle');
