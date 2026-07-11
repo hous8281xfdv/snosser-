@@ -29,6 +29,7 @@ function initNavigation() {
 const dictionarySearch = document.getElementById('dictionarySearch');
 const searchSuggestions = document.getElementById('searchSuggestions');
 const dictionaryResult = document.getElementById('dictionaryResult');
+const searchSpinner = document.getElementById('searchSpinner');
 
 if (dictionarySearch) {
     dictionarySearch.addEventListener('input', function() {
@@ -46,8 +47,10 @@ if (dictionarySearch) {
         const word = item.dataset.word;
         dictionarySearch.value = word;
         searchSuggestions.classList.remove('active');
-        dictionaryResult.innerHTML = '<p style="text-align:center;color:#8c8c8c;padding:20px;">Загрузка...</p>';
+        dictionaryResult.innerHTML = '<div class="skeleton skeleton-word"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div>';
+        searchSpinner.classList.add('active');
         await displayWord(word);
+        searchSpinner.classList.remove('active');
     });
 
     dictionarySearch.addEventListener('keydown', async function(e) {
@@ -55,8 +58,10 @@ if (dictionarySearch) {
             const query = this.value.toLowerCase().trim();
             if (!query) return;
             searchSuggestions.classList.remove('active');
-            dictionaryResult.innerHTML = '<p style="text-align:center;color:#8c8c8c;padding:20px;">Загрузка...</p>';
+            dictionaryResult.innerHTML = '<div class="skeleton skeleton-word"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div>';
+            searchSpinner.classList.add('active');
             await displayWord(query);
+            searchSpinner.classList.remove('active');
         }
     });
 
@@ -114,4 +119,51 @@ async function displayWord(word) {
     });
     saveUserData();
     updateLevelDisplay();
+}
+
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = {
+        success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
+        error: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+        achievement: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
+        levelup: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>'
+    };
+    
+    toast.innerHTML = `${icons[type] || icons.success} ${message}`;
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function updateLevelDisplay() {
+    const level = levelSystem.getLevel(userData.score || 0);
+    const badge = document.getElementById('levelBadge');
+    badge.textContent = level.name;
+    badge.style.background = level.color;
+}
+
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
 }
